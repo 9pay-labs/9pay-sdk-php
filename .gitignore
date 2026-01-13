@@ -1,0 +1,8 @@
+vendor/
+.phpunit.result.cache
+.php-cs-fixer.cache
+composer.lock
+phpunit.xml.bak
+.env
+index.php
+AI.md

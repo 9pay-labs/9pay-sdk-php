@@ -1,0 +1,49 @@
+{
+  "name": "ninepay/payment-gateway",
+  "description": "Official PHP SDK for 9PAY Payment Gateway",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "ninepay",
+    "9pay",
+    "payment",
+    "payment-gateway",
+    "sdk",
+    "php"
+  ],
+  "authors": [
+    {
+      "name": "Gecko Tech",
+      "email": "geckotech1001@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.4 <9.0",
+    "ext-json": "*",
+    "ext-openssl": "*",
+    "guzzlehttp/guzzle": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "NinePay\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "NinePay\\Tests\\": "tests/"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5"
+  },
+  "extra": {},
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
