@@ -1,5 +1,5 @@
 {
-  "name": "ninepay/payment-gateway",
+  "name": "ninepay-php/payment-gateway",
   "description": "Official PHP SDK for 9PAY Payment Gateway",
   "type": "library",
   "license": "MIT",

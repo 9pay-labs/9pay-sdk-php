@@ -1,9 +1,9 @@
 # 9PAY PHP SDK
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/ninepay/payment-gateway.svg?style=flat-square)](https://packagist.org/packages/ninepay/payment-gateway)
-[![Tests](https://github.com/ninepay/payment-gateway/actions/workflows/tests.yml/badge.svg)](https://github.com/ninepay/payment-gateway/actions/workflows/tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/ninepay/payment-gateway.svg?style=flat-square)](https://packagist.org/packages/ninepay/payment-gateway)
-[![License](https://img.shields.io/packagist/l/ninepay/payment-gateway.svg?style=flat-square)](https://packagist.org/packages/ninepay/payment-gateway)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/ninepay-php/payment-gateway.svg?style=flat-square)](https://packagist.org/packages/ninepay-php/payment-gateway)
+[![Tests](https://github.com/ninepay-php/payment-gateway/actions/workflows/tests.yml/badge.svg)](https://github.com/ninepay-php/payment-gateway/actions)
+[![Total Downloads](https://img.shields.io/packagist/dt/ninepay-php/payment-gateway.svg?style=flat-square)](https://packagist.org/packages/ninepay-php/payment-gateway)
+[![License](https://img.shields.io/packagist/l/ninepay-php/payment-gateway.svg?style=flat-square)](https://packagist.org/packages/ninepay-php/payment-gateway)
 
 Official PHP library for integrating 9PAY payment gateway. Supports creating payment requests, querying transactions, and verifying webhooks/callbacks.
 
@@ -29,7 +29,7 @@ Official PHP library for integrating 9PAY payment gateway. Supports creating pay
 Install the library via [Composer](https://getcomposer.org/):
 
 ```bash
-composer require ninepay/payment-gateway
+composer require ninepay-php/payment-gateway
 ```
 
 Requirements:
