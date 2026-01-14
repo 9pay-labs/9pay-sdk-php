@@ -178,13 +178,11 @@ if ($response->isSuccess()) {
 ### Verify Webhook / Callback
 
 ```php
-$payload = [
-    'result'   => $_POST['result'] ?? '',
-    'checksum' => $_POST['checksum'] ?? '',
-];
+$result = $_POST['result'] ?? '';
+$checksum = $_POST['checksum'] ?? '';
 
-if ($gateway->verify($payload)) {
-    $decoded = $gateway->decodeResult($payload['result']);
+if ($gateway->verify($result, $checksum)) {
+    $decoded = $gateway->decodeResult($result);
     $data = json_decode($decoded, true);
 } else {
     http_response_code(400);
