@@ -1,8 +1,7 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/9Pay-company/payment-gateway-php/refs/heads/master/logo-readme.png?sanitize=true" width="500" alt="9PAY Logo">
-</p>
 
-<p align="center">
+# 9PAY Payment Gateway PHP SDK
+
+<p align="left">
   <a href="https://packagist.org/packages/ninepay-gateway/rest-client-php">
     <img src="https://img.shields.io/packagist/v/ninepay-gateway/rest-client-php.svg?style=flat-square" alt="Latest Version">
   </a>
@@ -16,8 +15,6 @@
     <img src="https://img.shields.io/packagist/l/ninepay-gateway/rest-client-php.svg?style=flat-square" alt="License">
   </a>
 </p>
-
-# 9PAY Payment Gateway PHP SDK
 
 Official PHP SDK for integrating **9PAY Payment Gateway**.  
 Supports **PHP Native**, **Laravel**, and **Lumen**.
