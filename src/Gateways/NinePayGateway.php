@@ -9,6 +9,7 @@ use NinePay\Contracts\PaymentGatewayInterface;
 use NinePay\Contracts\ResponseInterface;
 use NinePay\Request\CreatePaymentRequest;
 use NinePay\Request\CreateRefundRequest;
+use NinePay\Request\PayerAuthRequest;
 use NinePay\Support\BasicResponse;
 use NinePay\Utils\Environment;
 use NinePay\Utils\HttpClient;
@@ -130,6 +131,36 @@ class NinePayGateway implements PaymentGatewayInterface
         $ok = isset($res['status']) && $res['status'] >= 200 && $res['status'] < 300;
 
         // Response body processing depends on implementation of HttpClient::post which returns array
+        $body = $res['body'] ?? [];
+        return new BasicResponse($ok, is_array($body) ? $body : ['raw' => $body], (string)($body['message'] ?? ''));
+    }
+
+    /**
+     * Payer authentication request.
+     *
+     * @param PayerAuthRequest $request
+     * @return ResponseInterface
+     */
+    public function payerAuth(PayerAuthRequest $request): ResponseInterface
+    {
+        $time = (string)time();
+        $payload = $request->toPayload();
+
+        $message = MessageBuilder::instance()
+            ->with($time, $this->endpoint . '/v2/payments/payer-auth', 'POST')
+            ->withParams($payload)
+            ->build();
+
+        $signature = Signature::sign($message, $this->secretKey);
+        $headers = [
+            'Date' => $time,
+            'Authorization' => 'Signature Algorithm=HS256,Credential=' . $this->clientId . ',SignedHeaders=,Signature=' . $signature,
+        ];
+
+        $res = $this->http->post($this->endpoint . '/v2/payments/payer-auth', $payload, $headers);
+
+        $ok = isset($res['status']) && $res['status'] >= 200 && $res['status'] < 300;
+
         $body = $res['body'] ?? [];
         return new BasicResponse($ok, is_array($body) ? $body : ['raw' => $body], (string)($body['message'] ?? ''));
     }

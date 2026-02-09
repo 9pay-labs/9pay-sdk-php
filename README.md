@@ -147,10 +147,13 @@ $gateway = new NinePayGateway($config);
 
 **Laravel / Lumen:**
 
-The gateway is automatically configured via the service container.
+The gateway is automatically configured via the service container. You can use the `NinePay` facade to interact with the gateway.
 
 ```php
-// todo
+use NinePay\Facades\NinePay;
+
+// You can call methods directly on the Facade
+// $response = NinePay::createPayment($request);
 ```
 
 ---
@@ -171,7 +174,7 @@ try {
     // 1. Create Request with required fields
     $request = new CreatePaymentRequest(
         'INV_' . time(),       // Invoice No
-        '50000',               // Amount
+        50000,                 // Amount
         'Payment for Order 1', // Description
         'https://site.com/callback', // Back/Cancel URL
         'https://site.com/return'    // Return URL
@@ -250,6 +253,44 @@ if ($gateway->verify($result, $checksum)) {
 
 ---
 
+### Payer Authentication
+
+Authenticate payer information for installment payments.
+
+```php
+use NinePay\Request\PayerAuthRequest;
+
+// 1. Initialize Request
+$request = new PayerAuthRequest(
+    'REQ_' . time(),       // Request ID
+    5000000,               // Amount (Min 3,000,000)
+    [
+        'amount_original' => 5000000,
+        'bank_code' => 'VCB', // Bank Code
+        'period' => 12        // Period: 3, 6, 9, 12
+    ],
+    [
+        'card_number' => '1234567890123456',
+        'hold_name' => 'NGUYEN VAN A',
+        'exp_month' => '12',
+        'exp_year' => '25',
+        'cvv' => '123'
+    ],
+    'https://site.com/return' // Return URL
+);
+
+// 2. Send Payer Auth Request
+$response = $gateway->payerAuth($request);
+
+if ($response->isSuccess()) {
+    echo "Auth Success: " . $response->getMessage();
+    print_r($response->getData());
+} else {
+    echo "Auth Failed: " . $response->getMessage();
+}
+```
+
+---
 
 ### Refund Transaction
 
