@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use NinePay\Config\NinePayConfig;
 use NinePay\Contracts\PaymentGatewayInterface;
 use NinePay\Gateways\NinePayGateway;
+use NinePay\Utils\HttpClient;
 
 class NinePayServiceProvider extends ServiceProvider
 {
@@ -20,10 +21,8 @@ class NinePayServiceProvider extends ServiceProvider
 
         $this->app->singleton('ninepay', function ($app) {
             $config = $app['config']->get('ninepay');
-            return new PaymentManager(NinePayConfig::fromArray($config));
+            return new NinePayGateway(NinePayConfig::fromArray($config), new HttpClient());
         });
-
-        $this->app->alias('ninepay', PaymentManager::class);
 
         $this->app->bind(PaymentGatewayInterface::class, NinePayGateway::class);
     }

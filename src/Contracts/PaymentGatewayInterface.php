@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace NinePay\Contracts;
 
 use NinePay\Request\CreatePaymentRequest;
+use NinePay\Request\CreateRefundRequest;
 
 /**
  * Interface PaymentGatewayInterface
@@ -29,6 +30,14 @@ interface PaymentGatewayInterface
     public function inquiry(string $transactionId): ResponseInterface;
 
     /**
+     * Create a refund request.
+     *
+     * @param CreateRefundRequest $request
+     * @return ResponseInterface
+     */
+    public function refund(CreateRefundRequest $request): ResponseInterface;
+
+    /**
      * Verify response signature from the payment gateway.
      *
      * @param string $result
@@ -36,4 +45,12 @@ interface PaymentGatewayInterface
      * @return bool
      */
     public function verify(string $result, string $checksum): bool;
+
+    /**
+     * Decode result data when verify() is successful.
+     *
+     * @param string $result Base64 encoded result string.
+     * @return string JSON result string after decoding.
+     */
+    public function decodeResult(string $result): string;
 }

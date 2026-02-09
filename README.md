@@ -150,16 +150,7 @@ $gateway = new NinePayGateway($config);
 The gateway is automatically configured via the service container.
 
 ```php
-use NinePay\PaymentManager;
-
-// Inject PaymentManager
-public function __construct(PaymentManager $paymentManager) {
-    $this->gateway = $paymentManager->getGateway();
-}
-
-// Or use the Facade
-use NinePay;
-// NinePay::createPayment(...)
+// todo
 ```
 
 ---

@@ -3,11 +3,19 @@
 namespace NinePay\Facades;
 
 use Illuminate\Support\Facades\Facade;
+use NinePay\Contracts\PaymentGatewayInterface;
+use NinePay\Contracts\ResponseInterface;
+use NinePay\Request\CreatePaymentRequest;
+use NinePay\Request\CreateRefundRequest;
 
 /**
- * @method static \NinePay\Contracts\PaymentGatewayInterface getGateway()
- * 
- * @see \NinePay\PaymentManager
+ * @method static ResponseInterface createPayment(CreatePaymentRequest $request)
+ * @method static ResponseInterface inquiry(string $transactionId)
+ * @method static ResponseInterface refund(CreateRefundRequest $request)
+ * @method static bool verify(string $result, string $checksum)
+ * @method static string decodeResult()
+ *
+ * @see PaymentGatewayInterface
  */
 class NinePay extends Facade
 {
