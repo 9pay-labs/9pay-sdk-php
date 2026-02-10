@@ -290,6 +290,42 @@ if ($response->isSuccess()) {
 
 ---
 
+### Authorize (Credit Card)
+
+Authorize a credit card payment.
+
+```php
+use NinePay\Request\AuthorizeCardPaymentRequest;
+
+// 1. Initialize Request
+$request = new AuthorizeCardPaymentRequest(
+    'REQ_' . time(),    // Request ID
+    123456789,          // Order Code
+    5000000,            // Amount
+    'VND'
+);
+
+->withCard(
+    '1234567890123456', // Card Number
+    'NGUYEN VAN A',     // Hold Name
+    12,                 // Exp Month
+    25,                 // Exp Year (2 digits)
+    '123'               // CVV
+);
+
+// 2. Send Authorize Request
+$response = $gateway->authorizeCardPayment($request);
+
+if ($response->isSuccess()) {
+    echo "Authorize Success: " . $response->getMessage();
+    print_r($response->getData());
+} else {
+    echo "Authorize Failed: " . $response->getMessage();
+}
+```
+
+---
+
 ### Refund Transaction
 
 Create a refund request for a successful transaction.

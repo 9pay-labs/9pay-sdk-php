@@ -5,9 +5,6 @@ namespace NinePay\Request\Concerns;
 
 use InvalidArgumentException;
 use NinePay\Enums\Currency;
-use NinePay\Enums\Language;
-use NinePay\Enums\PaymentMethod;
-use NinePay\Enums\TransactionType;
 
 /**
  * @property string|null currency

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace NinePay\Contracts;
 
+use NinePay\Request\AuthorizeCardPaymentRequest;
 use NinePay\Request\CreatePaymentRequest;
 use NinePay\Request\CreateRefundRequest;
 use NinePay\Request\PayerAuthRequest;
@@ -45,6 +46,14 @@ interface PaymentGatewayInterface
      * @return ResponseInterface
      */
     public function payerAuth(PayerAuthRequest $request): ResponseInterface;
+
+    /**
+     * Authorize card payment.
+     *
+     * @param AuthorizeCardPaymentRequest $request
+     * @return ResponseInterface
+     */
+    public function authorizeCardPayment(AuthorizeCardPaymentRequest $request): ResponseInterface;
 
     /**
      * Verify response signature from the payment gateway.

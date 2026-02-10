@@ -3,12 +3,6 @@ declare(strict_types=1);
 
 namespace NinePay\Request\Concerns;
 
-use InvalidArgumentException;
-use NinePay\Enums\Currency;
-use NinePay\Enums\Language;
-use NinePay\Enums\PaymentMethod;
-use NinePay\Enums\TransactionType;
-
 /**
  * @property array installment
  * @property array card

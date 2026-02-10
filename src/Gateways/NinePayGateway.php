@@ -7,6 +7,7 @@ use JsonException;
 use NinePay\Config\NinePayConfig;
 use NinePay\Contracts\PaymentGatewayInterface;
 use NinePay\Contracts\ResponseInterface;
+use NinePay\Request\AuthorizeCardPaymentRequest;
 use NinePay\Request\CreatePaymentRequest;
 use NinePay\Request\CreateRefundRequest;
 use NinePay\Request\PayerAuthRequest;
@@ -157,6 +158,37 @@ class NinePayGateway implements PaymentGatewayInterface
         ];
 
         $res = $this->http->post($this->endpoint . '/v2/payments/payer-auth', $payload, $headers);
+
+        $ok = isset($res['status']) && $res['status'] >= 200 && $res['status'] < 300;
+
+        $body = $res['body'] ?? [];
+        return new BasicResponse($ok, is_array($body) ? $body : ['raw' => $body], (string)($body['message'] ?? ''));
+    }
+
+    /**
+     * Authorize card payment.
+     *
+     * @param AuthorizeCardPaymentRequest $request
+     * @return ResponseInterface
+     * @throws JsonException
+     */
+    public function authorizeCardPayment(AuthorizeCardPaymentRequest $request): ResponseInterface
+    {
+        $time = (string)time();
+        $payload = $request->toPayload();
+        
+        $message = MessageBuilder::instance()
+            ->with($time, $this->endpoint . '/v2/payments/authorize', 'POST')
+            ->withParams(['json' => json_encode($payload)])
+            ->build();
+
+        $signature = Signature::sign($message, $this->secretKey);
+        $headers = [
+            'Date' => $time,
+            'Authorization' => 'Signature Algorithm=HS256,Credential=' . $this->clientId . ',SignedHeaders=,Signature=' . $signature,
+        ];
+
+        $res = $this->http->post($this->endpoint . '/v2/payments/authorize', $payload, $headers);
 
         $ok = isset($res['status']) && $res['status'] >= 200 && $res['status'] < 300;
 
