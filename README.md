@@ -264,22 +264,20 @@ use NinePay\Request\PayerAuthRequest;
 $request = new PayerAuthRequest(
     'REQ_' . time(),       // Request ID
     5000000,               // Amount (Min 3,000,000)
-    [
-        'amount_original' => 5000000,
-        'bank_code' => 'VCB', // Bank Code
-        'period' => 12        // Period: 3, 6, 9, 12
-    ],
-    [
-        'card_number' => '1234567890123456',
-        'hold_name' => 'NGUYEN VAN A',
-        'exp_month' => '12',
-        'exp_year' => '25',
-        'cvv' => '123'
-    ],
     'https://site.com/return' // Return URL
 );
 
-// 2. Send Payer Auth Request
+// 2. Add Installment & Card info
+$request->withInstallment(5000000, 'VCB', 12)
+    ->withCard(
+        '1234567890123456', // Card Number
+        'NGUYEN VAN A',     // Hold Name
+        12,                 // Exp Month
+        25,                 // Exp Year (2 digits)
+        '123'               // CVV
+    );
+
+// 3. Send Payer Auth Request
 $response = $gateway->payerAuth($request);
 
 if ($response->isSuccess()) {

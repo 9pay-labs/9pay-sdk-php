@@ -28,10 +28,10 @@ class NinePayGatewayPayerAuthTest extends TestCase
         $request = new PayerAuthRequest(
             'req_123',
             5000000,
-            ['period' => 12],
-            ['card_number' => '123'],
             'https://callback.url'
         );
+        $request->withInstallment(5000000, 'VCB', 12)
+            ->withCard('123', 'NGUYEN VAN A', 12, 25, '123');
 
         $this->http->expects($this->once())
             ->method('post')
@@ -61,10 +61,10 @@ class NinePayGatewayPayerAuthTest extends TestCase
         $request = new PayerAuthRequest(
             'req_123',
             5000000,
-            ['period' => 12],
-            ['card_number' => '123'],
             'https://callback.url'
         );
+        $request->withInstallment(5000000, 'VCB', 12)
+            ->withCard('123', 'NGUYEN VAN A', 12, 25, '123');
 
         $this->http->expects($this->once())
             ->method('post')

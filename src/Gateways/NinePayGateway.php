@@ -145,10 +145,9 @@ class NinePayGateway implements PaymentGatewayInterface
     {
         $time = (string)time();
         $payload = $request->toPayload();
-
         $message = MessageBuilder::instance()
             ->with($time, $this->endpoint . '/v2/payments/payer-auth', 'POST')
-            ->withParams($payload)
+            ->withParams(['json' => json_encode($payload)])
             ->build();
 
         $signature = Signature::sign($message, $this->secretKey);

@@ -13,20 +13,17 @@ class PayerAuthRequestTest extends TestCase
         $request = new PayerAuthRequest(
             'req_123456789',
             5000000,
-            [
-                'amount_original' => 5000000,
-                'bank_code' => 'VCB',
-                'period' => 12
-            ],
-            [
-                'card_number' => '1234567890123456',
-                'hold_name' => 'NGUYEN VAN A',
-                'exp_month' => '12',
-                'exp_year' => '25',
-                'cvv' => '123'
-            ],
             'https://merchant.com/callback'
         );
+
+        $request->withInstallment(5000000, 'VCB', 12)
+            ->withCard(
+                '1234567890123456',
+                'NGUYEN VAN A',
+                12,
+                25,
+                '123'
+            );
 
         $this->assertInstanceOf(PayerAuthRequest::class, $request);
         $payload = $request->toPayload();
@@ -37,6 +34,9 @@ class PayerAuthRequestTest extends TestCase
         $this->assertEquals('https://merchant.com/callback', $payload['return_url']);
         $this->assertIsArray($payload['installment']);
         $this->assertIsArray($payload['card']);
+        $this->assertEquals('VCB', $payload['installment']['bank_code']);
+        $this->assertEquals(12, $payload['installment']['period']);
+        $this->assertEquals('NGUYEN VAN A', $payload['card']['hold_name']);
     }
 
     public function test_it_throws_exception_if_request_id_too_long()
@@ -47,8 +47,6 @@ class PayerAuthRequestTest extends TestCase
         new PayerAuthRequest(
             'this_request_id_is_way_too_long_to_be_accepted',
             5000000,
-            ['period' => 12],
-            ['card_number' => '123'],
             'url'
         );
     }
@@ -61,8 +59,6 @@ class PayerAuthRequestTest extends TestCase
         new PayerAuthRequest(
             'req_123',
             2000000,
-            ['period' => 12],
-            ['card_number' => '123'],
             'url'
         );
     }
